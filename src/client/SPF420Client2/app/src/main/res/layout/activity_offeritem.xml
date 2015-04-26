@@ -1,0 +1,246 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.kevinhuang.spf420client.Inventory"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imghoney"
+        android:src="@drawable/honey"
+        android:scaleType="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:clickable="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgmineral"
+        android:src="@drawable/mineral"
+        android:scaleType="center"
+        android:layout_alignTop="@+id/imgclays"
+        android:layout_toEndOf="@+id/imgclays"
+        android:clickable="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgherbs"
+        android:src="@drawable/herbs"
+        android:scaleType="center"
+        android:layout_alignTop="@+id/imghoney"
+        android:layout_toEndOf="@+id/imghoney"
+        android:clickable="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgclays"
+        android:src="@drawable/clay"
+        android:scaleType="center"
+        android:layout_alignTop="@+id/imgherbs"
+        android:layout_toEndOf="@+id/imgherbs"
+        android:clickable="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgpotion"
+        android:src="@drawable/potion"
+        android:scaleType="center"
+        android:clickable="true"
+        android:layout_alignTop="@+id/imggems"
+        android:layout_toStartOf="@+id/imgincense" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgincense"
+        android:src="@drawable/incense"
+        android:scaleType="center"
+        android:clickable="true"
+        android:layout_alignTop="@+id/imgpotion"
+        android:layout_alignStart="@+id/imgpsstone" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imggems"
+        android:src="@drawable/gems"
+        android:scaleType="center"
+        android:layout_below="@+id/txtamountclays"
+        android:layout_toEndOf="@+id/imgpsstone"
+        android:clickable="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgelixir"
+        android:src="@drawable/elixir"
+        android:scaleType="center"
+        android:clickable="true"
+        android:layout_below="@+id/txtamountpotion"
+        android:layout_toStartOf="@+id/txtamountclays" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgcrystal"
+        android:src="@drawable/crystal"
+        android:scaleType="center"
+        android:clickable="true"
+        android:layout_alignTop="@+id/imgelixir"
+        android:layout_toEndOf="@+id/imgelixir" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgpsstone"
+        android:src="@drawable/psstone"
+        android:scaleType="center"
+        android:layout_below="@+id/txtamountcrystal"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamounthoney"
+        android:layout_below="@+id/imghoney"
+        android:layout_alignEnd="@+id/imghoney"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountherbs"
+        android:layout_below="@+id/imgherbs"
+        android:layout_alignEnd="@+id/imgherbs"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountclays"
+        android:layout_below="@+id/imgherbs"
+        android:layout_alignEnd="@+id/imgclays" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountmineral"
+        android:layout_below="@+id/imgmineral"
+        android:layout_alignEnd="@+id/imgmineral" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountpotion"
+        android:layout_below="@+id/imgpotion"
+        android:layout_alignStart="@+id/imgpotion" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountincense"
+        android:layout_alignTop="@+id/txtamountgems"
+        android:layout_alignEnd="@+id/imgincense" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountgems"
+        android:layout_below="@+id/imgincense"
+        android:layout_alignEnd="@+id/imggems" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountcrystal"
+        android:layout_below="@+id/imgcrystal"
+        android:layout_alignEnd="@+id/imgcrystal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountelixir"
+        android:layout_below="@+id/imgelixir"
+        android:layout_alignEnd="@+id/imgelixir" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Amount : X"
+        android:id="@+id/txtamountpsstone"
+        android:layout_below="@+id/imgpsstone"
+        android:layout_alignEnd="@+id/imgpsstone" />
+
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgselecteditem1"
+        android:layout_below="@+id/txtamountpsstone"
+        android:layout_toStartOf="@+id/imgelixir" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtsumitem1"
+        android:src="@drawable/plus"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:layout_alignTop="@+id/imgselecteditem2"
+        android:layout_alignBottom="@+id/imgselecteditem2"
+        android:layout_toRightOf="@+id/imgselecteditem1" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgselecteditem2"
+        android:layout_below="@+id/txtamountpsstone"
+        android:layout_toRightOf="@+id/edtsumitem1" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtsumitem2"
+        android:minWidth="30dp"
+        android:minHeight="30dp"
+        android:layout_alignTop="@+id/imgselecteditem2"
+        android:layout_alignBottom="@+id/imgselecteditem2"
+        android:layout_toRightOf="@+id/imgselecteditem2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Offer Item"
+        android:id="@+id/btnofferitem"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imgselecteditem1"/>
+
+</RelativeLayout>

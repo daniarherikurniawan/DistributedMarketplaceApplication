@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.kevinhuang.spf420client.Map"
+    >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtcoorx"
+        android:text="0"
+        android:layout_alignBottom="@+id/btnMove"
+        android:layout_alignTop="@+id/btnMove"
+        android:minWidth="30dp"
+        android:layout_toEndOf="@+id/btnMove" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtcoory"
+        android:text="0"
+        android:minWidth="30dp"
+        android:layout_alignTop="@+id/edtcoorx"
+        android:layout_alignBottom="@+id/edtcoorx"
+        android:layout_toEndOf="@+id/edtcoorx" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fetch"
+        android:id="@+id/btnFetch"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Move"
+        android:id="@+id/btnMove"
+        android:layout_alignTop="@+id/btnFetch"
+        android:layout_alignEnd="@+id/txtTimeTo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Time to : "
+        android:id="@+id/txtTimeTo"
+        android:layout_below="@+id/btnMove"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Current Time : "
+        android:id="@+id/txtCurrentTime"
+        android:layout_below="@+id/txtDisplayMovingTime"
+        android:layout_alignParentStart="true" />
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_toStartOf="@+id/btnFetch"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/tablemaps"
+        android:layout_below="@+id/txtDisplayCurrentTime"></TableLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="00:00:00"
+        android:id="@+id/txtDisplayMovingTime"
+        android:layout_below="@+id/txtTimeTo"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="00:00:00"
+        android:id="@+id/txtDisplayCurrentTime"
+        android:layout_below="@+id/txtCurrentTime"
+        android:layout_alignStart="@+id/txtDisplayMovingTime" />
+
+</RelativeLayout>
