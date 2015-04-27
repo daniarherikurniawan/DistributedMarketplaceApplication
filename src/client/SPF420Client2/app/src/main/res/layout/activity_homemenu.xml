@@ -6,31 +6,41 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.kevinhuang.spf420client.HomeMenu">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Map"
-        android:id="@+id/btnMap"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/btnMarket" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Market"
-        android:id="@+id/btnMarket"
-        android:layout_below="@+id/btnMap"
-        android:layout_alignParentEnd="true" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inventory"
+            android:id="@+id/btnInventory"
+            android:layout_below="@+id/btnMarket"
+            android:layout_alignEnd="@+id/btnMap"
+            android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Inventory"
-        android:id="@+id/btnInventory"
-        android:layout_below="@+id/btnMarket"
-        android:layout_alignEnd="@+id/btnMap" />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Market"
+            android:id="@+id/btnMarket"
+            android:layout_below="@+id/btnMap"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Map"
+            android:id="@+id/btnMap"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/btnMarket"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -38,22 +48,5 @@
         android:id="@+id/imageView2"
         android:src="@drawable/nyanta"
         android:layout_toStartOf="@+id/btnMap" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="What will you do?"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TesServer"
-        android:id="@+id/btntesserver"
-        android:layout_toEndOf="@+id/textView2"
-        android:layout_below="@+id/btnInventory" />
 
 </RelativeLayout>

@@ -6,75 +6,229 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
     >
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtUsername"
-        android:text="daniar"
-        android:layout_above="@+id/edtPassword"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="0dp" />
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/edtPassword"
-        android:text="1"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/edtUsername" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="100px"
+            android:id="@+id/linearLayout"
+            android:layout_gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Server IP : "
-        android:id="@+id/txtserverip"
-        android:layout_alignBaseline="@+id/edtip"
-        android:layout_alignBottom="@+id/edtip"
-        android:layout_alignParentStart="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Welcome"
+                android:id="@+id/textView4"
+                android:layout_column="3"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login!"
-        android:id="@+id/btnLogin"
-        android:layout_below="@+id/edtPassword"
-        android:layout_alignStart="@+id/edtPassword" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="187dp">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/btnregister"
-        android:layout_alignTop="@+id/btnLogin"
-        android:layout_toEndOf="@+id/btnLogin" />
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="177dp"
+                android:id="@+id/tableLayout"
+                android:layout_below="@+id/linearLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtip"
-        android:text="100.100.101.60"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/txtserverip" />
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Port : "
-        android:id="@+id/textView"
-        android:layout_below="@+id/edtip"
-        android:layout_alignParentStart="true" />
+                </TableRow>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtport"
-        android:text="8000"
-        android:layout_below="@+id/edtip"
-        android:layout_alignStart="@+id/edtip" />
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Server IP : "
+                        android:id="@+id/txtserverip"
+                        android:layout_alignBaseline="@+id/edtip"
+                        android:layout_alignBottom="@+id/edtip"
+                        android:layout_alignParentStart="true"
+                        android:layout_column="0" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edtip"
+                        android:text="100.100.101.60"
+                        android:layout_alignParentTop="true"
+                        android:layout_toEndOf="@+id/txtserverip"
+                        android:layout_column="3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Port : "
+                        android:id="@+id/textView"
+                        android:layout_below="@+id/edtip"
+                        android:layout_alignParentStart="true"
+                        android:layout_column="0" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edtport"
+                        android:text="8000"
+                        android:layout_below="@+id/edtip"
+                        android:layout_alignStart="@+id/edtip"
+                        android:layout_column="3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Username :"
+                        android:id="@+id/textView5"
+                        android:layout_column="0" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edtUsername"
+                        android:text="daniar"
+                        android:layout_marginBottom="0dp"
+                        android:layout_column="3"
+                        android:inputType="none" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Password :"
+                        android:id="@+id/textView6"
+                        android:layout_column="0" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:ems="10"
+                        android:id="@+id/edtPassword"
+                        android:text="1"
+                        android:layout_alignStart="@+id/edtUsername"
+                        android:layout_column="3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"></TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="120dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login!"
+                android:id="@+id/btnLogin"
+                android:layout_below="@+id/edtPassword"
+                android:layout_alignStart="@+id/edtPassword"
+                android:layout_column="3"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:id="@+id/btnregister"
+                android:layout_alignTop="@+id/btnLogin"
+                android:layout_toEndOf="@+id/btnLogin"
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </TableLayout>
 
 </RelativeLayout>

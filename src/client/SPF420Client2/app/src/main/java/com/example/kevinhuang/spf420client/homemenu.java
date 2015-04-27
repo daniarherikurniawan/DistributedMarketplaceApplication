@@ -55,14 +55,6 @@ public class homemenu extends ActionBarActivity {
                 }
             }
         });
-        final Button btntesserver = (Button)findViewById(R.id.btntesserver);
-        btntesserver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent openinventoryintent = new Intent(view.getContext(), TesServer.class);
-                startActivity(openinventoryintent);
-            }
-        });
     }
 
     private void OpenInventory() throws JSONException, ParseException {

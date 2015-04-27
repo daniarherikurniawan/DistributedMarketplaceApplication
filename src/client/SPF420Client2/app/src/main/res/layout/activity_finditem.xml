@@ -7,43 +7,102 @@
     tools:context="com.example.kevinhuang.spf420client.finditem"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="What do you want to find?"
-        android:id="@+id/txtout"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinneritem1"
-        android:layout_below="@+id/txtout"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/btnFind" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Find!"
-        android:id="@+id/btnFind"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/spinneritem1" />
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:layout_below="@+id/btnFind"
-        android:layout_alignParentStart="true" >
-
-        <TableLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/tableoffers"
-            android:stretchColumns="*"></TableLayout>
-    </ScrollView>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="278dp"
+                android:layout_height="51dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="What do you want to find?"
+                    android:id="@+id/txtout"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="264dp"
+            android:layout_height="88dp"
+            android:weightSum="1"
+            android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="144dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:weightSum="1"
+                android:layout_weight="1.17">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="136dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.69">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="117dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical">
+
+                        <Spinner
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/spinneritem1"
+                            android:layout_below="@+id/txtout"
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@+id/btnFind" />
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Find!"
+                        android:id="@+id/btnFind"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@+id/spinneritem1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView"
+                android:layout_below="@+id/btnFind"
+                android:layout_alignParentStart="true" >
+
+                <TableLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/tableoffers"
+                    android:stretchColumns="*"></TableLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

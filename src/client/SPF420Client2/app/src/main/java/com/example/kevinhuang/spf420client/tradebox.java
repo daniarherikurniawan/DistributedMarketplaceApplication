@@ -72,7 +72,7 @@ public class tradebox extends ActionBarActivity {
                 }
                 else if(col > 5)
                 {
-                    if(getData(offer,5) == false) //Col 5 adalah data tentang availability
+                    if((Boolean)getData(offer,5) == false) //Col 5 adalah data tentang availability
                     {
                         Button buttonfetch = new Button(this);
                         buttonfetch.setText("Fetch");
@@ -81,7 +81,7 @@ public class tradebox extends ActionBarActivity {
                         buttonfetch.setId(row);
                         tableRow.addView(buttonfetch);
                     }
-                    else if(getData(offer,5) == true)
+                    else if((Boolean)getData(offer,5) == true)
                     {
                         Button buttoncancel = new Button(this);
                         buttoncancel.setText("Cancel");

@@ -48,7 +48,7 @@ public class login extends ActionBarActivity {
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    try {
+                    /*try {
                         Login();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -56,7 +56,10 @@ public class login extends ActionBarActivity {
                             Intent loginintent = new Intent(view.getContext(), homemenu.class);
                             startActivity(loginintent);
                         }
-                    }}
+                    }*/
+                    Intent loginintent = new Intent(view.getContext(), homemenu.class);
+                    startActivity(loginintent);
+                }
             });
             final Button btnRegister = (Button)findViewById(R.id.btnregister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
