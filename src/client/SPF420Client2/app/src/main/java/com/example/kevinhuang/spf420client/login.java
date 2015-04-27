@@ -3,26 +3,16 @@ package com.example.kevinhuang.spf420client;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
 import org.json.JSONException;
-import org.json.simple.JSONArray;
-import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 
 public class login extends ActionBarActivity {
@@ -36,32 +26,36 @@ public class login extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        LoginSuccess = true;
+        LoginSuccess = false;
         playerData = new PlayerData();
-        playerData.setData();
+        try {
+            playerData.setData();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Toast.makeText(this,PlayerData.getItemOnMaps().toString(),Toast.LENGTH_SHORT).show();
         usernametxt = (EditText) findViewById(R.id.edtUsername);
         passwordtxt = (EditText) findViewById(R.id.edtPassword);
-        porttxt = (EditText) findViewById(R.id.edtport);
-        iptxt = (EditText) findViewById(R.id.edtport);
+        porttxt = (EditText) findViewById(R.id.edtlogport);
+        iptxt = (EditText) findViewById(R.id.edtlogip);
         final Button btnLogin = (Button)findViewById(R.id.btnLogin);
-            btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    /*try {
-                        Login();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        if(LoginSuccess) {
-                            Intent loginintent = new Intent(view.getContext(), homemenu.class);
-                            startActivity(loginintent);
-                        }
-                    }*/
-                    Intent loginintent = new Intent(view.getContext(), homemenu.class);
-                    startActivity(loginintent);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Login();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            });
-            final Button btnRegister = (Button)findViewById(R.id.btnregister);
+                if(LoginSuccess) {
+                    Intent homemenuintent = new Intent(view.getContext(), homemenu.class);
+                    startActivity(homemenuintent);
+                }
+            }
+        });
+        final Button btnRegister = (Button)findViewById(R.id.btnregister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,32 +65,24 @@ public class login extends ActionBarActivity {
         });
     }
 
-    private void Login() throws IOException, JSONException, ParseException {
-        //"100.100.101.216"
-        Toast.makeText(this,"Username: "+usernametxt.getText().toString()+"\nPassword: "+passwordtxt.getText().toString(),Toast.LENGTH_SHORT).show();
-        JSONObject newrequest = new JSONObject();
-        newrequest.put("method","login");
-        newrequest.put("username",usernametxt.getText().toString());
-        newrequest.put("password",passwordtxt.getText().toString());
-        //TODO GET REQUEST
-        ClientServerConnector cs = new ClientServerConnector("100.100.101.216",8002);
-        String response = cs.actionLogin(usernametxt.getText().toString(), passwordtxt.getText().toString());
-        Log.d(null,response);
-        Toast.makeText(this,response,Toast.LENGTH_LONG).show();
+    private void Login() throws IOException, JSONException {
+        //Toast.makeText(this,"Username: "+usernametxt.getText().toString()+"\nPassword: "+passwordtxt.getText().toString(),Toast.LENGTH_SHORT).show();
+        String username = usernametxt.getText().toString();
+        String password = passwordtxt.getText().toString();
+        String ip = iptxt.getText().toString();
+        int port = Integer.parseInt(String.valueOf(porttxt.getText()));
+        ClientServerConnector cs = new ClientServerConnector(ip,port);
+        String response = cs.actionLogin(username, password);
+        Toast.makeText(this,response,Toast.LENGTH_SHORT).show();
         //tes.SendRequest(newrequest.toString());
         //String response = tes.getResponse();
 
-        JSONParser parser = new JSONParser();
-        Object temp = parser.parse(response);
-        JSONObject responsejson = (JSONObject)temp;
+
+        org.json.JSONObject responsejson = new org.json.JSONObject(response);
         String response_status = null;
-        try {
-            response_status = (String) parser.parse(responsejson.get("status").toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        response_status = (String) responsejson.get("status");
         if(response_status.equals("fail")){
-            String description = (String) parser.parse(responsejson.get("description").toString());
+            String description = (String) responsejson.get("description");
             Toast.makeText(this,description,Toast.LENGTH_SHORT).show();
             LoginSuccess = false;
         }
@@ -107,14 +93,16 @@ public class login extends ActionBarActivity {
         else if(response_status.equals("ok")){
             Toast.makeText(this,"Login Success",Toast.LENGTH_SHORT).show();
             LoginSuccess = true;
-            String token = (String) parser.parse(responsejson.get("token").toString());
-            int corx = (int) parser.parse(responsejson.get("x").toString());
-            int cory = (int) parser.parse(responsejson.get("y").toString());
-            Long time = (Long) parser.parse(responsejson.get("time").toString());
+            String token = (String) responsejson.get("token");
+            int corx = (int) responsejson.get("x");
+            int cory = (int) responsejson.get("y");
+            int time = (int) responsejson.get("time");
             PlayerData.setCurrentPositionX(corx);
             PlayerData.setCurrentPositionY(cory);
             PlayerData.setMovingTimeUTC(time);
             PlayerData.setUserToken(token);
+            PlayerData.setIp(ip);
+            PlayerData.setPort(port);
         }
 
 

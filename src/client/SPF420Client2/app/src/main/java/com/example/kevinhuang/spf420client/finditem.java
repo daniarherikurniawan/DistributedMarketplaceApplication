@@ -13,16 +13,18 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 
 public class finditem extends ActionBarActivity implements GameSetting {
     private Spinner myspinner;
     private Button Find;
     private JSONArray jsonarrayoffers;
+    private TableLayout tablelayout;
     private AutoResizeTextView txtoffers[][] = new AutoResizeTextView[2][ColomnName.length];
 
     @Override
@@ -36,28 +38,29 @@ public class finditem extends ActionBarActivity implements GameSetting {
         Find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FindItem();
+                try {
+                    FindItem();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
-        TableLayout tablelayout = (TableLayout)findViewById(R.id.tableoffers);
+        tablelayout = (TableLayout)findViewById(R.id.tableoffers);
         int colomnid = 0;
-        try {
-            setJSONArrayoffers(PlayerData.getJsonobjectoffers().toString());
-            createTableHeader(tablelayout,colomnid);
-            createListOffer(tablelayout,colomnid);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        //setJSONArrayoffers(PlayerData.getJsonobjectoffers().toString());
+        //createTableHeader(tablelayout,colomnid);
+        //createListOffer(tablelayout,colomnid);
     }
 
-    private void setJSONArrayoffers(String jsonobjectoffers) throws ParseException {
-        JSONParser parser = new JSONParser();
-        JSONObject jsonobjectoffersobject = (JSONObject) parser.parse(jsonobjectoffers);
-        jsonarrayoffers = (JSONArray) parser.parse(jsonobjectoffersobject.get("offers").toString());
+    private void setJSONArrayoffers(String jsonobjectoffers) throws  JSONException {
+        JSONObject jsonobjectoffersobject = new JSONObject(jsonobjectoffers);
+        jsonarrayoffers = (JSONArray) jsonobjectoffersobject.get("offers");
         TextView txtout = (TextView) findViewById(R.id.txtout);
     }
 
-    private void createListOffer(TableLayout tableLayout,int colomnid) throws ParseException {
+    private void createListOffer(TableLayout tableLayout,int colomnid)  {
         //Initalize offer list
         for(int row = 0;row<jsonarrayoffers.size()+1;row++){
             //TODO Clean code for initial row = 1
@@ -103,7 +106,13 @@ public class finditem extends ActionBarActivity implements GameSetting {
                         buttonaccept.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                FindItem();
+                                try {
+                                    FindItem();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
                         buttonaccept.setId(row);
@@ -121,8 +130,7 @@ public class finditem extends ActionBarActivity implements GameSetting {
         }
     }
 
-    private JSONArray getofferbynumber(int offernum) throws ParseException {
-        JSONParser parser = new JSONParser();
+    private JSONArray getofferbynumber(int offernum){
         TextView txtout = (TextView) findViewById(R.id.txtout);
         JSONArray offer = (JSONArray) jsonarrayoffers.get(offernum);
         return offer;
@@ -166,8 +174,36 @@ public class finditem extends ActionBarActivity implements GameSetting {
         }
     }
 
-    private void FindItem(){
-        Toast.makeText(this, "Item selected" + myspinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+    private void FindItem() throws IOException, JSONException {
+        Toast.makeText(this, "Item selected" + myspinner.getSelectedItemPosition(), Toast.LENGTH_SHORT).show();
+        int temp = myspinner.getSelectedItemPosition();
+        System.out.print("swt");
+        ClientServerConnector cs = new ClientServerConnector(PlayerData.getIp(),PlayerData.getPort());
+        String response = cs.actionSendFind(PlayerData.getUserToken(),temp);
+        //Toast.makeText(this,response,Toast.LENGTH_SHORT).show();
+        //tes.SendRequest(newrequest.toString());
+        //String response = tes.getResponse();
+        System.out.println("asdflanlsdfj");
+        System.out.println("ping");
+        JSONObject responsejson = new JSONObject(response);
+        String response_status = null;
+        response_status = (String) responsejson.get("status");
+        if(response_status.equals("fail")){
+            String description = (String) responsejson.get("description");
+            Toast.makeText(this,description,Toast.LENGTH_SHORT).show();
+        }
+        else if(response_status.equals("error")){
+            Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+        }
+        else if(response_status.equals("ok")){
+            Toast.makeText(this,"Login Success",Toast.LENGTH_SHORT).show();
+            int colomnid = 0;
+            PlayerData.setJsonobjectoffers(new JSONObject(response));
+            PlayerData.CreateJSONArrayoffers();
+            createTableHeader(tablelayout, colomnid);
+            createListOffer(tablelayout,colomnid);
+
+        }
 
         //Json here
 

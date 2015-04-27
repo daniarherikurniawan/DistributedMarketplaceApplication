@@ -17,11 +17,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -39,8 +39,8 @@ public class map extends ActionBarActivity implements GameSetting {
     private TableLayout tablelayout;
     private Thread CurrentTimeThread;
     private String movingtime;
-    private long Movingtimestamp;
-    private long Currenttimestamp;
+    private int Movingtimestamp;
+    private Long Currenttimestamp;
     private final Handler handler = new Handler();
     private Button buttons[][];
     private TextView tempout;
@@ -69,7 +69,15 @@ public class map extends ActionBarActivity implements GameSetting {
         btnMove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               MoveCharacter();
+
+                try {
+                    MoveCharacter();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         btnFetch.setOnClickListener(new View.OnClickListener() {
@@ -80,11 +88,58 @@ public class map extends ActionBarActivity implements GameSetting {
         });
     }
 
-    private void MoveCharacter(){
+    private void MoveCharacter() throws JSONException, IOException {
+        final int movetox = Integer.parseInt(String.valueOf(coordinatex.getText()));
+        final int movetoy = Integer.parseInt(String.valueOf(coordinatey.getText()));
         Currenttimestamp = Calendar.getInstance().getTime().getTime();
-        if(Movingtimestamp <= Currenttimestamp*1000){
+        if(Movingtimestamp <= Currenttimestamp*1000 && PlayerData.getCurrentPositionX() != movetox && PlayerData.getCurrentPositionY() != movetoy){
             //TODO SEND JSON HERE
-            final int movetox = Integer.parseInt(String.valueOf(coordinatex.getText()));
+            ClientServerConnector cs = new ClientServerConnector(PlayerData.getIp(),PlayerData.getPort());
+
+            //TODO GET REQUEST
+            String response = cs.actionMove(PlayerData.getUserToken(),movetox,movetoy);
+            //tes.SendRequest(newrequest.toString());
+            //String response = tes.getResponse();
+            JSONObject responsejson = new JSONObject(response);
+            String response_status = null;
+            try {
+                response_status = (String) (responsejson.get("status"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(response_status.equals("fail")){
+                String description = (String) (responsejson.get("description"));
+                Toast.makeText(this,description,Toast.LENGTH_SHORT).show();
+            }
+            else if(response_status.equals("error")){
+                Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+            }
+            else if(response_status.equals("ok")){
+                Toast.makeText(this,"Moving Success",Toast.LENGTH_SHORT).show();
+                final int templastcoorx = PlayerData.getCurrentPositionX();
+                final int templastcoory = PlayerData.getCurrentPositionY();
+                int timeutc = (int) responsejson.get("time");
+                PlayerData.setMovingTimeUTC(timeutc);
+                PlayerData.setCurrentPositionX(movetox);
+                PlayerData.setCurrentPositionY(movetoy);
+                Button lastplayerpositionbutton = buttons[templastcoory][templastcoorx];
+                Button movedtobutton = buttons[movetoy][movetox];
+                lastplayerpositionbutton.setBackground(getResources().getDrawable(R.drawable.grass));
+                lastplayerpositionbutton.setText("" + templastcoorx + "," + templastcoory);
+                lastplayerpositionbutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gridButtonClicked(templastcoorx, templastcoory);
+                    }
+                });
+                movedtobutton.setBackground(getResources().getDrawable(R.drawable.akatsuki2));
+                Toast.makeText(this,"Last pos : "+templastcoorx+","+templastcoory,Toast.LENGTH_SHORT).show();
+            }
+
+
+
+
+            /*final int movetox = Integer.parseInt(String.valueOf(coordinatex.getText()));
             final int movetoy = Integer.parseInt(String.valueOf(coordinatey.getText()));
             if(movetox <= PlayerData.getMAP_ROWS() && movetoy <= PlayerData.getMAP_COLS()){
                 final int templastcoorx = PlayerData.getCurrentPositionX();
@@ -103,15 +158,18 @@ public class map extends ActionBarActivity implements GameSetting {
                 });
                 movedtobutton.setBackground(getResources().getDrawable(R.drawable.akatsuki2));
                 Toast.makeText(this,"Last pos : "+templastcoorx+","+templastcoory,Toast.LENGTH_SHORT).show();
-
             }
+            */
+        }
+        else{
+            Toast.makeText(this,"Try to Move failed",Toast.LENGTH_SHORT).show();
         }
     }
 
     private void FetchItem(){
         int corx = PlayerData.getCurrentPositionX();
         int cory = PlayerData.getCurrentPositionY();
-        Long iditem = PlayerData.getItemOnMaps()[cory][corx];
+        int iditem = PlayerData.getItemOnMaps()[cory][corx];
         //TODO hapus tempout
         //tempout = (TextView)findViewById(R.id.txtTimeTo);
         //tempout.setText("Item Fetched : " +iditem);
@@ -217,7 +275,7 @@ public class map extends ActionBarActivity implements GameSetting {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the Home/Up button, so int
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 

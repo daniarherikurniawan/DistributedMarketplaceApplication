@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 
 public class inventory extends ActionBarActivity implements GameSetting{
@@ -45,28 +45,20 @@ public class inventory extends ActionBarActivity implements GameSetting{
         selecteditem3 = -99;
         Canmix = false;
 
-        try {
+        SetTextAmount(true);
 
-            SetTextAmount(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         SetBlankButton();
         SetAllItemButton();
         SetButtonmix();
     }
 
-    private void SetTextAmount(boolean initial) throws ParseException {
+    private void SetTextAmount(boolean initial)  {
         for(int textamountid = 0;textamountid<IdItemAmount.length;textamountid++)
         {
             TextView temp = (TextView) findViewById(IdItemAmount[textamountid]);
             temp.setText("Amount : "+PlayerData.getItemsAmount()[textamountid]);
         }
     }
-
-
-
-
 
     private void SetBlankButton(){
         btnselecteditem1 = (ImageButton) findViewById(R.id.imgselecteditem1);
@@ -111,20 +103,40 @@ public class inventory extends ActionBarActivity implements GameSetting{
         btnmix.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 try {
                     mixSelectedItem();
-                } catch (ParseException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         });
     }
 
-    private void mixSelectedItem() throws ParseException {
-        /*if(Canmix)
-        {
-            if(selecteditem3 != -99)
-            {
+    private void mixSelectedItem() throws JSONException {
+
+        if(Canmix) {
+            Toast.makeText(this, "Merge :\n" + ItemsName[selecteditem1] + " with " + ItemsName[selecteditem2], Toast.LENGTH_SHORT).show();
+            //TODO SEND REQUESt
+            //TODO GET REQUEST
+            String response = null;
+            //tes.SendRequest(newrequest.toString());
+            //String response = tes.getResponse();
+
+            JSONObject responsejson = new JSONObject(response);
+            String response_status = null;
+
+            response_status = (String) responsejson.get("status");
+
+            if (response_status.equals("fail")) {
+                String description = (String) responsejson.get("description");
+                Toast.makeText(this, description, Toast.LENGTH_SHORT).show();
+            } else if (response_status.equals("error")) {
+                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+            } else if (response_status.equals("ok")) {
+                Toast.makeText(this, "Mix Success", Toast.LENGTH_SHORT).show();
+                int idmixeditem = (int) responsejson.get("item");
                 PlayerData.changeItemsAmount(selecteditem3,1);
                 PlayerData.changeItemsAmount(selecteditem1,-MinimummixAmount);
                 PlayerData.changeItemsAmount(selecteditem2,-MinimummixAmount);
@@ -132,48 +144,6 @@ public class inventory extends ActionBarActivity implements GameSetting{
                 CancelSelectedItem(2);
                 Canmix = false;
                 SetTextAmount(false);
-            }
-            else
-            {
-                //error
-                Toast.makeText(this, "mix Item ID unidentifiable : "+selecteditem3, Toast.LENGTH_SHORT).show();
-            }
-        }
-        else
-        {
-            Toast.makeText(this, "mix unavailable", Toast.LENGTH_SHORT).show();
-        }*/
-        if(Canmix) {
-            Toast.makeText(this, "Merge :\n" + ItemsName[selecteditem1] + " with " + ItemsName[selecteditem2], Toast.LENGTH_SHORT).show();
-            //TODO SEND REQUESt
-            JSONObject newrequest = new JSONObject();
-            newrequest.put("method", "mixitem");
-            newrequest.put("token",PlayerData.getUserToken());
-            newrequest.put("item1",selecteditem1);
-            newrequest.put("item2",selecteditem2);
-            //TODO GET REQUEST
-            String response = null;
-            //tes.SendRequest(newrequest.toString());
-            //String response = tes.getResponse();
-
-            JSONParser parser = new JSONParser();
-            Object temp = parser.parse(response);
-            JSONObject responsejson = (JSONObject) temp;
-            String response_status = null;
-            try {
-                response_status = (String) parser.parse(responsejson.get("status").toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (response_status.equals("fail")) {
-                String description = (String) parser.parse(responsejson.get("description").toString());
-                Toast.makeText(this, description, Toast.LENGTH_SHORT).show();
-            } else if (response_status.equals("error")) {
-                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-            } else if (response_status.equals("ok")) {
-                Toast.makeText(this, "Mix Success", Toast.LENGTH_SHORT).show();
-                Long mixeditem = (Long) parser.parse(responsejson.get("item").toString());
-                //PlayerData.setItemsAmount(PlayerData.getItemsAmount()[s(int)(long)mixeditem]++);
             }
         }
         else

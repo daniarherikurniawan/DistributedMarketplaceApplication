@@ -12,10 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class offeritem extends ActionBarActivity implements GameSetting {
@@ -44,17 +42,15 @@ public class offeritem extends ActionBarActivity implements GameSetting {
         CanOffer = false;
         edtsumitem1 = (EditText) findViewById(R.id.edtsumitem1);
         edtsumitem2 = (EditText) findViewById(R.id.edtsumitem2);
-        try {
-            SetTextAmount(true);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+        SetTextAmount(true);
+
         SetBlankButton();
         SetAllItemButton();
         SetButtonOffer();
     }
 
-    private void SetTextAmount(boolean initial) throws ParseException {
+    private void SetTextAmount(boolean initial)  {
         for(int textamountid = 0;textamountid<IdItemAmount.length;textamountid++)
         {
             TextView temp = (TextView) findViewById(IdItemAmount[textamountid]);
@@ -103,16 +99,14 @@ public class offeritem extends ActionBarActivity implements GameSetting {
         btnoffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    OfferSelectedItem();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+
+                OfferSelectedItem();
+
             }
         });
     }
 
-    private void OfferSelectedItem() throws ParseException {
+    private void OfferSelectedItem()  {
         CheckIfCanOffer();
         if(CanOffer)
         {
@@ -167,7 +161,7 @@ public class offeritem extends ActionBarActivity implements GameSetting {
     }
 
     private void CheckIfCanOffer(){
-        if(!edtsumitem1.getText().toString().equals("") && !edtsumitem2.getText().toString().equals("") &&
+        if(!(edtsumitem1.getText().toString() == "") && !(edtsumitem2.getText().toString()=="") &&
                 selecteditem1 != -99 && selecteditem2 != -99){
             if(Integer.parseInt(edtsumitem1.getText().toString()) <= PlayerData.getSpecificItemsAmount(selecteditem1)){
                 CanOffer = true;

@@ -11,35 +11,33 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
-public class tradebox extends ActionBarActivity {
-    private final String[] ItemsName = new String[]{"Honey","Herbs","Clays","Minerals","Potion","Incense","Gems","Life Elixir","Mana Crystal","Philosopher Stone"};
-    private final String[] ColomnName = new String[]{"No","OfferedItem","Sum","DesiredItem","Sum","Availabilty","Accept?"};
+public class tradebox extends ActionBarActivity implements  GameSetting{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tradebox);
         TableLayout tablelayout = (TableLayout)findViewById(R.id.tabletradeboxoffers);
         int colomnid = 0;
+        createTableHeader(tablelayout,colomnid);
+        getofferbynumber(0);
         try {
-            createTableHeader(tablelayout,colomnid);
-            getofferbynumber(0);
             createListOffer(tablelayout,colomnid);
-        } catch (ParseException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 
 
 
-    private void createListOffer(TableLayout tableLayout,int colomnid) throws ParseException {
+    private void createListOffer(TableLayout tableLayout,int colomnid) throws JSONException {
         //Initalize offer list
-        for(int row = 0;row<PlayerData.getJsonobjecttrades().size()+1;row++){
+        for(int row = 0;row<PlayerData.getJsonobjecttrades().length()+1;row++){
             //TODO Clean code for initial row = 1
             if(row == 0)
             {
@@ -101,14 +99,13 @@ public class tradebox extends ActionBarActivity {
         }
     }
 
-    private JSONArray getofferbynumber(int offernum) throws ParseException {
-        JSONParser parser = new JSONParser();
+    private JSONArray getofferbynumber(int offernum) {
         TextView txtout = (TextView) findViewById(R.id.txtout);
         JSONArray offer = (JSONArray) PlayerData.getJsonarraytrades().get(offernum);
         return offer;
     }
 
-    private Object getData(JSONArray offer,int col){
+    private Object getData(JSONArray offer,int col) throws JSONException {
         Object data = new Object();
         data = offer.get(col-1);
         if(col-1 == 0 || col-1 ==2) //Kode nama item

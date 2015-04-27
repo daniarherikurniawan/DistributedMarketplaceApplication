@@ -56,15 +56,15 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Server IP : "
                         android:id="@+id/txtserverip"
-                        android:layout_alignBaseline="@+id/edtip"
-                        android:layout_alignBottom="@+id/edtip"
+                        android:layout_alignBaseline="@+id/edtlogip"
+                        android:layout_alignBottom="@+id/edtlogip"
                         android:layout_alignParentStart="true"
                         android:layout_column="0" />
 
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edtip"
+                        android:id="@+id/edtlogip"
                         android:text="100.100.101.60"
                         android:layout_alignParentTop="true"
                         android:layout_toEndOf="@+id/txtserverip"
@@ -81,17 +81,17 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Port : "
                         android:id="@+id/textView"
-                        android:layout_below="@+id/edtip"
+                        android:layout_below="@+id/edtlogip"
                         android:layout_alignParentStart="true"
                         android:layout_column="0" />
 
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edtport"
+                        android:id="@+id/edtlogport"
                         android:text="8000"
-                        android:layout_below="@+id/edtip"
-                        android:layout_alignStart="@+id/edtip"
+                        android:layout_below="@+id/edtlogip"
+                        android:layout_alignStart="@+id/edtlogip"
                         android:layout_column="3" />
                 </TableRow>
 

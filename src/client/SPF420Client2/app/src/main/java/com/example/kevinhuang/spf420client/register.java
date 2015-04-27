@@ -1,5 +1,6 @@
 package com.example.kevinhuang.spf420client;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,11 +12,9 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONObject;
 
-import java.security.spec.RSAKeyGenParameterSpec;
+import java.io.IOException;
 
 
 public class register extends ActionBarActivity {
@@ -23,6 +22,8 @@ public class register extends ActionBarActivity {
     private EditText usernametxt;
     private EditText passwordtxt;
     private Boolean RegisterSuccess;
+    private EditText porttxt;
+    private EditText iptxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,8 @@ public class register extends ActionBarActivity {
         RegisterSuccess = true;
         usernametxt = (EditText) findViewById(R.id.edtregisusername);
         passwordtxt = (EditText) findViewById(R.id.edtregispass);
+        porttxt = (EditText) findViewById(R.id.porttxt);
+        iptxt = (EditText) findViewById(R.id.iptxt);
         btnregister = (Button) findViewById(R.id.btnregister);
         btnregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,35 +41,34 @@ public class register extends ActionBarActivity {
                     Register(usernametxt.getText().toString(),passwordtxt.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
-                } catch (ParseException e) {
+
+                } catch (IOException e) {
                     e.printStackTrace();
+                }
+                if(RegisterSuccess) {
+                    Intent loginintent = new Intent(v.getContext(), login.class);
+                    startActivity(loginintent);
                 }
             }
         });
     }
 
-    private void Register(String username,String password) throws JSONException, ParseException {
-        Toast.makeText(this,"Username: "+username+"\nPassword: "+password,Toast.LENGTH_SHORT).show();
+    private void Register(String username,String password) throws JSONException, IOException {
         JSONObject newrequest = new JSONObject();
-        newrequest.put("method","signup");
-        newrequest.put("username",username);
-        newrequest.put("password",password);
-        //TODO GET REQUEST
-        String response = null;
+        String ip = iptxt.getText().toString();
+        int port = Integer.parseInt(String.valueOf(porttxt.getText()));
+        ClientServerConnector cs = new ClientServerConnector(ip,port);
+        String response = cs.actionSignup(username,password);
+        Toast.makeText(this,response,Toast.LENGTH_SHORT).show();
         //tes.SendRequest(newrequest.toString());
-        //String response = tes.getResponse();
+        System.out.println(response);
 
-        JSONParser parser = new JSONParser();
-        Object temp = parser.parse(response);
-        JSONObject responsejson = (JSONObject)temp;
+        //Object temp = parser.parse(response);
+        JSONObject responsejson = new JSONObject(response);
         String response_status = null;
-        try {
-            response_status = (String) parser.parse(responsejson.get("status").toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        response_status = (String) responsejson.get("status");
         if(response_status.equals("fail")){
-            String description = (String) parser.parse(responsejson.get("description").toString());
+            String description = (String) responsejson.get("description");
             Toast.makeText(this,description,Toast.LENGTH_SHORT).show();
             RegisterSuccess = false;
         }

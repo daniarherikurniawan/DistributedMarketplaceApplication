@@ -5,10 +5,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 
@@ -25,19 +24,22 @@ public class PlayerData implements GameSetting {
     private static int MAP_ROWS;
     private static int MAP_COLS;
     private static String UserToken;
-    private static Long MovingTimeUTC;
+    private static int MovingTimeUTC;
     private static JSONObject jsonobjectmap;
     private static JSONObject jsonobjectoffers;
     private static JSONObject jsonobjecttrades;
     private static JSONObject jsonobjectamountinventory;
-    private static Long[] ItemsAmount;
+    private static int[] ItemsAmount;
     private static JSONArray jsonarrayamountinvetory;
-    private static Long[][] ItemOnMaps;
+    private static int[][] ItemOnMaps;
     private static JSONArray jsonarraymaps;
     private static JSONArray jsonarrayoffers;
     private static JSONArray jsonarraytrades;
+    private static String name;
+    private static String ip;
+    private static int port;
 
-    public void setData(){
+    public void setData() throws JSONException {
         CurrentPositionX = 0;
         CurrentPositionY = 0;
         MovingToNextPileTime = new SimpleDateFormat("MMMM d, yyyy 'at' h:mm a");
@@ -47,10 +49,10 @@ public class PlayerData implements GameSetting {
         UserToken = "";
         MAP_COLS = 4;
         MAP_ROWS = 5;
-        MovingTimeUTC = Long.valueOf(1427730710);
-        ItemsAmount = new Long[TotalItem];
-        ItemOnMaps = new Long[MAP_ROWS][MAP_COLS];
-        CreateJSONObjectMapdummy();
+        MovingTimeUTC = 1427730710;
+        ItemsAmount = new int[TotalItem];
+        ItemOnMaps = new int[MAP_ROWS][MAP_COLS];
+        /*CreateJSONObjectMapdummy();
         createjsonobjectoffersdummy();
         createjsonobjecttradesdummy();
         createjsonobjectinventorysdummy();
@@ -79,11 +81,11 @@ public class PlayerData implements GameSetting {
             setJSONArraytrades();
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
-    private static void CreateJSONObjectMapdummy(){
+    private static void CreateJSONObjectMapdummy() throws JSONException {
         jsonobjectmap = new JSONObject();
         JSONArray mapjson = new JSONArray();
         int itemid = 0;
@@ -101,7 +103,7 @@ public class PlayerData implements GameSetting {
             }
             mapjson.add(maprowjson);
         }
-        jsonobjectmap.put("name",UserName);
+        jsonobjectmap.put("name", UserName);
         jsonobjectmap.put("width",MAP_COLS);
         jsonobjectmap.put("height",MAP_ROWS);
         jsonobjectmap.put("map", mapjson);
@@ -164,11 +166,11 @@ public class PlayerData implements GameSetting {
     }
 
 
-    public static Long getMovingTimeUTC() {
+    public static int getMovingTimeUTC() {
         return MovingTimeUTC;
     }
 
-    public static void setMovingTimeUTC(Long movingTimeUTC) {
+    public static void setMovingTimeUTC(int movingTimeUTC) {
         MovingTimeUTC = movingTimeUTC;
     }
 
@@ -177,16 +179,16 @@ public class PlayerData implements GameSetting {
         return jsonobjectmap;
     }
 
-    public void setJsonobjectmap(JSONObject jsonobjectmap) {
-        this.jsonobjectmap = jsonobjectmap;
+    public static void setJsonobjectmap(JSONObject jsonobjectmap) {
+        PlayerData.jsonobjectmap = jsonobjectmap;
     }
 
     public static JSONObject getJsonobjectoffers() {
         return jsonobjectoffers;
     }
 
-    public void setJsonobjectoffers(JSONObject jsonobjectoffers) {
-        this.jsonobjectoffers = jsonobjectoffers;
+    public static void setJsonobjectoffers(JSONObject jsonobjectoffers) {
+        PlayerData.jsonobjectoffers = jsonobjectoffers;
     }
 
     public static JSONObject getJsonobjectamountinventory() {
@@ -197,11 +199,11 @@ public class PlayerData implements GameSetting {
         PlayerData.jsonobjectamountinventory = jsonobjectamountinventory;
     }
 
-    public static Long[] getItemsAmount() {
+    public static int[] getItemsAmount() {
         return ItemsAmount;
     }
 
-    public static void setItemsAmount(Long[] itemsAmount) {
+    public static void setItemsAmount(int[] itemsAmount) {
         ItemsAmount = itemsAmount;
     }
 
@@ -214,7 +216,7 @@ public class PlayerData implements GameSetting {
     }
 
 
-    public static Long[][] getItemOnMaps() {
+    public static int[][] getItemOnMaps() {
         return ItemOnMaps;
     }
 
@@ -242,7 +244,35 @@ public class PlayerData implements GameSetting {
         PlayerData.jsonarraytrades = jsonarraytrades;
     }
 
-    private static void createjsonobjectoffersdummy(){
+    public static void setItemOnMaps(int[][] itemOnMaps) {
+        ItemOnMaps = itemOnMaps;
+    }
+
+    public static String getName() {
+        return name;
+    }
+
+    public static void setName(String name) {
+        PlayerData.name = name;
+    }
+
+    public static String getIp() {
+        return ip;
+    }
+
+    public static void setIp(String ip) {
+        PlayerData.ip = ip;
+    }
+
+    public static int getPort() {
+        return port;
+    }
+
+    public static void setPort(int port) {
+        PlayerData.port = port;
+    }
+
+    private static void createjsonobjectoffersdummy() throws JSONException {
         jsonobjectoffers = new JSONObject();
         JSONArray offersjson = new JSONArray();
         JSONArray offerjson = new JSONArray();
@@ -269,7 +299,7 @@ public class PlayerData implements GameSetting {
         jsonobjectoffers.put("offers", offersjson);
     }
 
-    private static void createjsonobjecttradesdummy(){
+    private static void createjsonobjecttradesdummy() throws JSONException {
         jsonobjecttrades= new JSONObject();
         JSONArray tradesjson = new JSONArray();
         JSONArray tradejson = new JSONArray();
@@ -296,7 +326,7 @@ public class PlayerData implements GameSetting {
         jsonobjecttrades.put("offers", tradesjson);
     }
 
-    private static void createjsonobjectinventorysdummy(){
+    private static void createjsonobjectinventorysdummy() throws JSONException {
         jsonobjectamountinventory = new JSONObject();
         JSONArray sumiteminventoryjson = new JSONArray();
         sumiteminventoryjson.add(1); //Clay
@@ -313,7 +343,7 @@ public class PlayerData implements GameSetting {
         jsonobjectamountinventory.put("inventory", sumiteminventoryjson);
     }
 
-    private void SetItemsAmount(boolean initial) throws ParseException {
+    private void SetItemsAmount(boolean initial)  {
         for(int textamountid = 0;textamountid<IdItemAmount.length;textamountid++)
         {
             if(initial) {
@@ -321,51 +351,47 @@ public class PlayerData implements GameSetting {
             }
         }
     }
-    private Long getamountitembyid(int itemid) throws ParseException {
-        JSONParser parser = new JSONParser();
-        Long itemamount = (Long) jsonarrayamountinvetory.get(itemid);
+    private int getamountitembyid(int itemid)  {
+        int itemamount = (int) jsonarrayamountinvetory.get(itemid);
         return itemamount;
     }
-    private static void setJSONArrayamountinventory() throws ParseException {
-        JSONParser parser = new JSONParser();
-        JSONObject jsonobjectoffersobject = (JSONObject) parser.parse(jsonobjectamountinventory.toString());
-        jsonarrayamountinvetory = (JSONArray) parser.parse(jsonobjectoffersobject.get("inventory").toString());
+    private static void setJSONArrayamountinventory() throws  JSONException {
+        jsonarrayamountinvetory = (JSONArray) jsonobjectamountinventory.get("inventory");
     }
     public static void changeItemsAmount(int selecteditem,int delta){
         ItemsAmount[selecteditem] += delta;
     }
-    public static Long getSpecificItemsAmount(int itemselected){
+    public static int getSpecificItemsAmount(int itemselected){
         return ItemsAmount[itemselected];
     }
     public static void CreateJSONArraymaps(){
-        JSONParser parser = new JSONParser();
         try {
-            jsonarraymaps = (JSONArray) parser.parse(jsonobjectmap.get("map").toString());
-        } catch (ParseException e) {
+            //CreateJSONObjectMapdummy();
+            jsonarraymaps = (JSONArray) jsonobjectmap.get("map");
+            System.out.println(jsonarraymaps.toString());
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    private void CreateItemonMaps() throws ParseException {
+    public static void CreateItemonMaps()  {
         for(int row = 0;row<PlayerData.getMAP_ROWS();row++) {
             for (int col = 0; col < PlayerData.getMAP_COLS(); col++) {
                 ItemOnMaps[row][col] = getitemidonmap(row, col);
             }
         }
     }
-    private Long getitemidonmap(int row,int col) throws ParseException {
-        JSONParser parser = new JSONParser();
+    private static int getitemidonmap(int row, int col) {
         JSONArray jsonarraymaprow = (JSONArray) jsonarraymaps.get(row);
-        Long itemid = (long)jsonarraymaprow.get(col);
+        System.out.print("asdfasdf");
+        int itemid = (int)jsonarraymaprow.get(col);
         return itemid;
     }
-    private void setJSONArrayoffers() throws ParseException {
-        JSONParser parser = new JSONParser();
-        jsonarrayoffers = (JSONArray) parser.parse(jsonobjectoffers.get("offers").toString());
+    public static void CreateJSONArrayoffers() throws JSONException {
+        jsonarrayoffers = (JSONArray) jsonobjectoffers.get("offers");
     }
 
-    private void setJSONArraytrades() throws ParseException {
-        JSONParser parser = new JSONParser();
-        jsonarraytrades = (JSONArray) parser.parse(jsonobjecttrades.get("offers").toString());
+    private void setJSONArraytrades() throws JSONException {
+        jsonarraytrades = (JSONArray)jsonobjecttrades.get("offers");
     }
 
     public static JSONObject getJsonobjecttrades() {
@@ -375,7 +401,5 @@ public class PlayerData implements GameSetting {
     public static void setJsonobjecttrades(JSONObject jsonobjecttrades) {
         PlayerData.jsonobjecttrades = jsonobjecttrades;
     }
-    public static void changeitemamount(int iditem){
 
-    }
 }
